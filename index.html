@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- مكتبة Tailwind CSS للتشغيل الفوري داخل ملف واحد -->
+  <!-- Tailwind CSS للتشغيل الفوري داخل ملف واحد -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -42,10 +42,10 @@
 </head>
 <body class="bg-black text-white antialiased selection:bg-neutral-800 selection:text-white">
 
-  <!-- عنصر تشغيل الصوت المخفي (مستوى الصوت الافتراضي 100%) -->
+  <!-- عنصر تشغيل الصوت المخفي (مستوى الصوت 100% افتراضياً) -->
   <audio id="globalAudio" preload="metadata"></audio>
 
-  <!-- طبقة وميض الفلاش الزينون الأبيض النقي (Xenon Flash Effect) -->
+  <!-- طبقة وميض فلاش الزينون الأبيض النقي (Pure Monochrome Flash) -->
   <div id="flashEffect" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-700 ease-out flex items-center justify-center opacity-0 hidden">
     <div class="absolute inset-0 bg-gradient-to-b from-white/95 via-neutral-200/40 to-black/90"></div>
     <div class="relative w-full max-w-4xl h-96 flex items-center justify-around opacity-80">
@@ -55,13 +55,14 @@
     <div class="absolute w-96 h-96 rounded-full bg-white/40 blur-3xl"></div>
   </div>
 
-  <!-- خلفية بي إم دبليو الثابتة والمظلمة (Full Screen Monochrome Wallpaper) -->
+  <!-- خلفية بي إم دبليو الثابتة (Full Screen Monochrome Wallpaper) -->
   <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none">
     <img
-      src="/src/assets/images/bmw_headlights_dark_1791259170122.jpg"
+      id="bgBmwImage"
+      src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1920&auto=format&fit=crop"
       alt="BMW headlights background"
       class="w-full h-full object-cover object-center opacity-25 filter grayscale contrast-125 brightness-75 scale-105"
-      onerror="this.style.display='none'"
+      onerror="this.src='./bmw_dark.jpg'"
     />
     <div class="absolute inset-0 bg-radial from-transparent via-black/60 to-black pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90 pointer-events-none"></div>
@@ -71,9 +72,11 @@
   <div id="splashView" class="fixed inset-0 w-screen h-screen bg-black overflow-hidden flex flex-col justify-between items-center cursor-pointer select-none py-6 sm:py-10 px-4 z-40">
     <div class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
       <img
-        src="/src/assets/images/bmw_headlights_dark_1791259170122.jpg"
+        id="splashBmwImage"
+        src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1920&auto=format&fit=crop"
         alt="BMW headlights in full screen darkness"
         class="w-full h-full object-cover object-center filter grayscale contrast-115 brightness-95"
+        onerror="this.src='./bmw_dark.jpg'"
       />
       <div class="absolute inset-0 bg-radial from-transparent via-black/40 to-black pointer-events-none"></div>
       <div class="absolute inset-0 bg-gradient-to-b from-black/85 via-transparent to-black/90 pointer-events-none"></div>
@@ -86,7 +89,7 @@
       </h1>
     </div>
 
-    <!-- مساحة وسطى لمصابيح السيارة -->
+    <!-- مساحة وسطية لمصابيح السيارة -->
     <div class="relative z-10 my-auto pointer-events-none"></div>
 
     <!-- كلمة XAT و GOD IS LOVE السفلية -->
@@ -106,7 +109,7 @@
     <!-- حاوية العرض الثابتة ذات الارتفاع المحدد (Zero Shift Container) -->
     <div class="w-full max-w-xl sm:max-w-2xl h-[460px] sm:h-[490px] flex flex-col items-center justify-between my-auto relative">
       
-      <!-- المسار العلوي الثابت 100%: أزرار التنقل (HOME / MUSIC) -->
+      <!-- المسار العلوي الثابت: أزرار التنقل (HOME / MUSIC) بدون أي حركة -->
       <div class="w-full h-12 flex items-center justify-center shrink-0">
         <nav class="flex items-center gap-6 sm:gap-10 px-6 sm:px-8 py-2 rounded-full bg-white/[0.04] backdrop-blur-md border border-white/[0.1] shadow-[0_0_30px_rgba(0,0,0,0.8)]">
           
@@ -128,7 +131,7 @@
             <span class="text-[12px] sm:text-xs font-black tracking-widest font-montserrat uppercase text-[#666666] group-hover:text-neutral-200">
               MUSIC
             </span>
-            <!-- مؤشر الموجة الصوتية المتحرك -->
+            <!-- مؤشر الموجة الصوتية الأبيض -->
             <div id="navAudioWave" class="flex items-center gap-0.5 ml-1 hidden">
               <span class="w-0.5 h-2.5 bg-white rounded-full animate-pulse"></span>
               <span class="w-0.5 h-3.5 bg-white rounded-full animate-pulse"></span>
@@ -146,17 +149,19 @@
         <div id="homeTab" class="w-full h-full flex flex-col items-center justify-center select-none py-1">
           <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-8 md:gap-12">
             
-            <!-- الصورة الشخصية مع تأثير فلاش الهوفر والنبض (Flash & Pulse) -->
+            <!-- الصورة الشخصية مع تأثير فلاش الهوفر والنبض (Flash & Pulse) برابط CDN المباشر -->
             <div class="flex items-center justify-center shrink-0">
               <div id="personalPhotoCard" class="group relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden cursor-pointer bg-neutral-950 border border-white/[0.1] transition-all duration-500 hover:border-white/50 hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
                 <img
-                  src="/src/assets/images/pola_portrait_1791259179127.jpg"
+                  id="personalPhotoImg"
+                  src="https://i.pinimg.com/736x/2d/79/b4/2d79b46de2deb3744fd330d815b76751.jpg"
                   alt="POLA personal portrait"
                   class="w-full h-full object-cover object-center filter grayscale contrast-115 brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700"
+                  onerror="this.src='./pola_portrait.jpg'"
                 />
-                <!-- نبض الهالة البيضاء عند التمرير -->
+                <!-- هالة النبض البيضاء عند التمرير -->
                 <div class="absolute inset-0 rounded-2xl border border-transparent group-hover:border-white/40 group-hover:animate-pulse pointer-events-none transition-all duration-300"></div>
-                <!-- مسحة وميض الضوء المتحركة -->
+                <!-- وميض مسحة الضوء السريعة -->
                 <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none"></div>
                 <div class="absolute bottom-2.5 left-2.5 bg-black/70 backdrop-blur-sm p-1 rounded-md border border-white/10 opacity-70 group-hover:opacity-100 transition-opacity">
@@ -200,7 +205,7 @@
           </div>
         </div>
 
-        <!-- تبويب المشغل الموسيقي الصغير الكاجوال (MUSIC TAB - NO SCREEN CARD) -->
+        <!-- تبويب المشغل الموسيقي الصغير الكاجوال (MUSIC TAB - بدون شاشة عرض مربعة) -->
         <div id="musicTab" class="w-full h-full flex flex-col items-center justify-center select-none py-1 hidden">
           <div class="w-full max-w-sm sm:max-w-md flex flex-col items-center justify-center text-center p-3 sm:p-4 rounded-2xl bg-white/[0.02] backdrop-blur-md border border-white/[0.06] shadow-[0_0_25px_rgba(0,0,0,0.6)]">
             
@@ -260,17 +265,15 @@
               </button>
             </div>
 
-            <!-- كبسولات الأغاني الـ 7 المصغرة والمدمجة -->
-            <div id="playlistPills" class="w-full flex flex-wrap justify-center gap-1 mt-2.5 max-h-16 overflow-y-auto px-1">
-              <!-- يتم ملؤها ديناميكياً من الجافاسكريبت -->
-            </div>
+            <!-- كبسولات الأغاني الـ 7 المصغرة -->
+            <div id="playlistPills" class="w-full flex flex-wrap justify-center gap-1 mt-2.5 max-h-16 overflow-y-auto px-1"></div>
 
           </div>
         </div>
 
       </main>
 
-      <!-- المسار السفلي الثابت 100%: عبارة GOD IS LOVE -->
+      <!-- المسار السفلي الثابت: عبارة GOD IS LOVE -->
       <div class="w-full h-8 flex items-center justify-center shrink-0">
         <p class="text-xs sm:text-sm font-bold tracking-[0.32em] uppercase select-none font-montserrat text-neutral-600">
           GOD IS LOVE
@@ -281,9 +284,9 @@
 
   </div>
 
-  <!-- كود الجافاسكريبت الموحد لكافة المؤثرات والأصوات والمشغل -->
+  <!-- الجافاسكريبت المدمج للأصوات والمشغل والصور -->
   <script>
-    // 1. قائمة الأغاني الرسمية بروابطها الأصلية
+    // 1. قائمة الأغاني الرسمية بروابط الصوت المباشرة
     const playlist = [
       { id: 1, title: 'الحب الجميل', artist: 'جورج وسوف', url: 'https://audio.jukehost.co.uk/01a0c563-b001-71fa-a83f-618c057e8dd1', duration: '04:12' },
       { id: 2, title: 'صابر وراضي', artist: 'جورج وسوف', url: 'https://audio.jukehost.co.uk/01a0c563-af3b-72ac-8c36-843b07cfa380', duration: '03:58' },
@@ -294,7 +297,7 @@
       { id: 7, title: 'ذكريات', artist: 'جورج وسوف', url: 'https://audio.jukehost.co.uk/01a10b9b-d6f8-7174-92fa-7b5eaa7552ff', duration: '04:50' }
     ];
 
-    // 2. محرك توليد أصوات سيارة BMW والمؤثرات الصوتية (Web Audio API)
+    // 2. محرك توليد أصوات سيارة BMW (Web Audio API)
     class SoundEngine {
       constructor() {
         this.ctx = null;
@@ -317,7 +320,7 @@
         master.gain.setValueAtTime(0.7, now);
         master.connect(ctx.destination);
 
-        // محرك التشغيل الأولي (Crank)
+        // نقرات محرك التشغيل (Starter Crank)
         for (let i = 0; i < 3; i++) {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
@@ -385,7 +388,7 @@
 
     const sound = new SoundEngine();
 
-    // 3. حالة المشغل الموسيقي والتطبيق
+    // 3. حالة المشغل الموسيقي
     let currentTrackIndex = 0;
     let isPlaying = false;
     let isShuffle = false;
@@ -394,7 +397,7 @@
     let activeTab = 'HOME';
 
     const audio = document.getElementById('globalAudio');
-    // ضبط مستوى الصوت الافتراضي على 100% كما طلبت
+    // مستوى الصوت الافتراضي 100% كما طلبت
     audio.volume = 1.0;
     audio.src = playlist[0].url;
 
@@ -464,7 +467,7 @@
     document.getElementById('polaTextTrigger').addEventListener('click', () => sound.playThrottleRev());
     document.getElementById('crownTrigger').addEventListener('click', () => sound.playThrottleRev());
 
-    // 5. التبديل فائق السلاسة بين القوائم بدون أي إزاحة (Zero Shift)
+    // 5. التبديل فائق السلاسة بين القوائم بدون أي حركة (Zero Shift)
     function switchTab(target) {
       if (activeTab === target) return;
       sound.playClick();
@@ -603,7 +606,6 @@
       mutedIcon.classList.toggle('hidden', !isMuted);
     });
 
-    // تحديث التوقيت وشريط التقدم
     function formatTime(s) {
       if (isNaN(s)) return '00:00';
       const m = Math.floor(s / 60);
@@ -640,7 +642,7 @@
       }
     });
 
-    // التهيئة المبدئية
+    // تشغيل القائمة المبدئية
     updateTrackUI();
   </script>
 </body>
