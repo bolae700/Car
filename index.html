@@ -42,15 +42,22 @@
     }
   </style>
 </head>
-<body class="bg-black text-white min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
+<body class="bg-black text-white min-h-screen flex flex-col justify-center items-center relative overflow-hidden font-montserrat">
 
   <!-- مشغل الصوت العام الخفي -->
   <audio id="globalAudio" preload="metadata"></audio>
 
-  <!-- فلاش زينون الإضاءة الأمامية عند التشغيل -->
-  <div id="flashOverlay" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0 bg-white"></div>
+  <!-- تأثير فلاش المصابيح الأمامية الحقيقي المتطابق (Headlight Flash Effect) -->
+  <div id="flashOverlay" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-700 ease-out flex items-center justify-center opacity-0 hidden" aria-hidden="true">
+    <div class="absolute inset-0 bg-gradient-to-b from-white/90 via-neutral-200/30 to-black/85 animate-pulse duration-300"></div>
+    <div class="relative w-full max-w-4xl h-96 flex items-center justify-around opacity-80">
+      <div class="w-56 h-56 rounded-full border-2 border-white/90 shadow-[0_0_80px_30px_rgba(255,255,255,0.7)] animate-ping duration-500"></div>
+      <div class="w-56 h-56 rounded-full border-2 border-white/90 shadow-[0_0_80px_30px_rgba(255,255,255,0.7)] animate-ping duration-500"></div>
+    </div>
+    <div class="absolute w-96 h-96 rounded-full bg-radial from-white via-neutral-300/40 to-transparent blur-3xl"></div>
+  </div>
 
-  <!-- خلفية السيارة الداكنة في كامل الشاشة (Monochrome Stealth) -->
+  <!-- خلفية السيارة الكاملة في العمق (Monochrome Stealth) -->
   <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none">
     <img
       id="bgCarImg"
@@ -106,18 +113,22 @@
   <div id="mainView" class="relative z-10 w-full min-h-screen flex items-center justify-center px-4 py-4 m-auto opacity-0 pointer-events-none transition-opacity duration-500">
     <div class="w-full max-w-xl sm:max-w-2xl h-[460px] sm:h-[490px] flex flex-col items-center justify-between my-auto relative">
 
-      <!-- الجزء العلوي الثابت: أزرار التبويبات (ثابتة 100% بدون أي اهتزاز) -->
+      <!-- الجزء العلوي الثابت: أزرار التبويبات مع التاج المطابق 100% -->
       <div class="w-full h-12 flex items-center justify-center shrink-0 z-30">
         <nav class="flex items-center gap-6 sm:gap-10 px-6 sm:px-8 py-2 rounded-full bg-white/[0.04] backdrop-blur-md border border-white/[0.1] shadow-[0_0_30px_rgba(0,0,0,0.8)]">
           <!-- تبويب HOME -->
           <button id="tabHomeBtn" onclick="switchTab('HOME')" class="group flex items-center gap-2 cursor-pointer transition-all duration-300 py-1 px-2 rounded-lg opacity-100 scale-105">
-            <svg class="w-5 h-5 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2v-2zM4 17l2.5-10 4 5 1.5-7 1.5 7 4-5 2.5 10H4z"/></svg>
+            <svg class="w-5 h-5 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" viewBox="0 0 100 90" fill="currentColor">
+              <path d="M 14 82 L 86 82 L 95 18 L 71 50 L 50 21 L 29 50 L 5 18 Z"/>
+            </svg>
             <span class="text-[12px] sm:text-xs font-black tracking-widest uppercase font-montserrat text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">HOME</span>
           </button>
 
           <!-- تبويب MUSIC -->
           <button id="tabMusicBtn" onclick="switchTab('MUSIC')" class="group flex items-center gap-2 cursor-pointer transition-all duration-300 py-1 px-2 rounded-lg opacity-40 hover:opacity-85">
-            <svg class="w-5 h-5 text-[#555555] group-hover:text-neutral-300" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2v-2zM4 17l2.5-10 4 5 1.5-7 1.5 7 4-5 2.5 10H4z"/></svg>
+            <svg class="w-5 h-5 text-[#555555] group-hover:text-neutral-300" viewBox="0 0 100 90" fill="currentColor">
+              <path d="M 14 82 L 86 82 L 95 18 L 71 50 L 50 21 L 29 50 L 5 18 Z"/>
+            </svg>
             <span class="text-[12px] sm:text-xs font-black tracking-widest uppercase font-montserrat text-[#666666] group-hover:text-neutral-200">MUSIC</span>
             <div id="playingWaves" class="hidden items-center gap-0.5 ml-1">
               <span class="w-0.5 h-2.5 bg-white rounded-full animate-pulse"></span>
@@ -135,7 +146,7 @@
         <div id="homeTabContent" class="w-full h-full flex items-center justify-center transition-all duration-300 opacity-100 scale-100">
           <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-8 md:gap-12">
             
-            <!-- الصورة الشخصية -->
+            <!-- الصورة الشخصية مع التاج المطابق 100% -->
             <div class="flex items-center justify-center shrink-0">
               <div id="photoCard" onclick="triggerPhotoRev()" class="group relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden cursor-pointer bg-neutral-950 border border-white/[0.1] transition-all duration-500 hover:border-white/50 hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]" title="انقر لتشغيل تأثير الفلاش وصوت المحرك">
                 <img
@@ -148,16 +159,22 @@
                 <div class="absolute inset-0 rounded-2xl border border-transparent group-hover:border-white/40 group-hover:animate-pulse pointer-events-none transition-all duration-300"></div>
                 <div class="absolute inset-0 gleam-effect pointer-events-none bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full transition-transform duration-1000"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none"></div>
+                <!-- تاج الصورة الشخصية المطابق 100% -->
                 <div class="absolute bottom-2.5 left-2.5 bg-black/70 backdrop-blur-sm p-1 rounded-md border border-white/10 opacity-70 group-hover:opacity-100 transition-opacity">
-                  <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2v-2zM4 17l2.5-10 4 5 1.5-7 1.5 7 4-5 2.5 10H4z"/></svg>
+                  <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 100 90" fill="currentColor">
+                    <path d="M 14 82 L 86 82 L 95 18 L 71 50 L 50 21 L 29 50 L 5 18 Z"/>
+                  </svg>
                 </div>
               </div>
             </div>
 
             <!-- معلومات الاسم والبروفايل -->
             <div class="flex flex-col items-center sm:items-start justify-center text-center sm:text-left">
+              <!-- تاج POLA العلوي المطابق 100% -->
               <div onclick="soundFx.playThrottleRev()" class="mb-1 transition-transform duration-300 hover:scale-110 cursor-pointer" title="انقر لسماع صوت المحرك">
-                <svg class="w-10 h-10 text-[#484848] hover:text-white transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2v-2zM4 17l2.5-10 4 5 1.5-7 1.5 7 4-5 2.5 10H4z"/></svg>
+                <svg class="w-10 h-10 text-[#484848] hover:text-white transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]" viewBox="0 0 100 90" fill="currentColor">
+                  <path d="M 14 82 L 86 82 L 95 18 L 71 50 L 50 21 L 29 50 L 5 18 Z"/>
+                </svg>
               </div>
 
               <h1 onclick="soundFx.playThrottleRev()" class="text-5xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight select-none font-montserrat leading-none text-[#444444] hover:text-white transition-colors cursor-pointer" style="letter-spacing: 0.02em; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">
@@ -185,13 +202,15 @@
           </div>
         </div>
 
-        <!-- محتوى MUSIC TAB (مشغل كاجوال شبابي أنيق وصغير الحجم) -->
+        <!-- محتوى MUSIC TAB (مشغل كاجوال شبابي أنيق مع التاج المطابق 100%) -->
         <div id="musicTabContent" class="w-full h-full hidden items-center justify-center transition-all duration-300 opacity-0 scale-95">
           <div class="w-full max-w-sm sm:max-w-md flex flex-col items-center justify-center text-center p-3 sm:p-4 rounded-2xl bg-white/[0.02] backdrop-blur-md border border-white/[0.06] shadow-[0_0_25px_rgba(0,0,0,0.6)]">
             
-            <!-- التاج الملكي -->
+            <!-- التاج الملكي المطابق 100% -->
             <div class="mb-1 transition-transform duration-300 hover:scale-110">
-              <svg class="w-7 h-7 text-[#484848] hover:text-white transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2v-2zM4 17l2.5-10 4 5 1.5-7 1.5 7 4-5 2.5 10H4z"/></svg>
+              <svg class="w-7 h-7 text-[#484848] hover:text-white transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]" viewBox="0 0 100 90" fill="currentColor">
+                <path d="M 14 82 L 86 82 L 95 18 L 71 50 L 50 21 L 29 50 L 5 18 Z"/>
+              </svg>
             </div>
 
             <!-- اسم الأغنية الحالية -->
@@ -215,33 +234,27 @@
 
             <!-- أزرار التحكم في التشغيل -->
             <div class="w-full max-w-xs flex items-center justify-center gap-2.5 sm:gap-3.5 mt-1.5">
-              <!-- عشوائي -->
               <button id="shuffleBtn" onclick="toggleShuffle()" class="p-1 text-neutral-500 hover:text-white rounded-full cursor-pointer" title="عشوائي">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H4v-4m12-4h4v4m0 0l-5-5m5 5l-5 5M4 8l5 5"/></svg>
               </button>
 
-              <!-- السابق -->
               <button onclick="prevTrack()" class="p-1.5 rounded-full text-neutral-300 hover:text-white hover:bg-white/[0.08] transition-all cursor-pointer" title="السابق">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
               </button>
 
-              <!-- تشغيل / إيقاف مؤقت -->
               <button id="playPauseBtn" onclick="togglePlay()" class="p-2.5 rounded-full bg-white text-black hover:bg-neutral-200 transition-all cursor-pointer active:scale-95 shadow-[0_0_15px_rgba(255,255,255,0.35)]" title="تشغيل">
                 <svg id="playIcon" class="w-4 h-4 fill-black ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                 <svg id="pauseIcon" class="w-4 h-4 fill-black hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
               </button>
 
-              <!-- التالي -->
               <button onclick="nextTrack()" class="p-1.5 rounded-full text-neutral-300 hover:text-white hover:bg-white/[0.08] transition-all cursor-pointer" title="التالي">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
               </button>
 
-              <!-- تكرار -->
               <button id="repeatBtn" onclick="toggleRepeat()" class="p-1 text-neutral-500 hover:text-white rounded-full cursor-pointer" title="تكرار">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
               </button>
 
-              <!-- كتم الصوت -->
               <button id="muteBtn" onclick="toggleMute()" class="p-1 text-neutral-500 hover:text-white cursor-pointer ml-1" title="كتم / إلغاء الكتم">
                 <svg id="volumeIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"/></svg>
                 <svg id="muteIcon" class="w-3.5 h-3.5 text-neutral-400 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
@@ -268,12 +281,12 @@
 
   <script>
     // =========================================================================
-    // روابط الصور المباشرة (رابط سيارتك الأصلي المعطى):
+    // روابط الصور المباشرة المعتمدة:
     // =========================================================================
     const CAR_IMAGE_URL = "https://xatimg.com/image/ZaEVOxtvEP1x.jpg";
     const PORTRAIT_IMAGE_URL = "https://i.pinimg.com/736x/2d/79/b4/2d79b46de2deb3744fd330d815b76751.jpg";
 
-    // قائمة الأغاني السبع المباشرة
+    // قائمة الأغاني السبع
     const PLAYLIST = [
       { id: 1, title: 'الحب الجميل', artist: 'جورج وسوف', url: 'https://audio.jukehost.co.uk/01a0c563-b001-71fa-a83f-618c057e8dd1', duration: '04:12' },
       { id: 2, title: 'صابر وراضي', artist: 'جورج وسوف', url: 'https://audio.jukehost.co.uk/01a0c563-af3b-72ac-8c36-843b07cfa380', duration: '03:58' },
@@ -284,99 +297,259 @@
       { id: 7, title: 'ذكريات', artist: 'جورج وسوف', url: 'https://audio.jukehost.co.uk/01a10b9b-d6f8-7174-92fa-7b5eaa7552ff', duration: '04:50' }
     ];
 
-    // نظام المؤثرات الصوتية للمحرك (Web Audio API)
-    class SoundFx {
+    // =========================================================================
+    // نظام المؤثرات الصوتية المتطابق مع الكود الأصلي (Web Audio API Engine)
+    // =========================================================================
+    class SoundSystem {
       constructor() {
         this.ctx = null;
+        this.isMuted = false;
       }
-      init() {
+      getAudioContext() {
         if (!this.ctx) {
           const AudioCtx = window.AudioContext || window.webkitAudioContext;
           if (AudioCtx) this.ctx = new AudioCtx();
         }
         if (this.ctx && this.ctx.state === 'suspended') {
-          this.ctx.resume();
+          this.ctx.resume().catch(() => {});
         }
+        return this.ctx;
       }
+
+      // صوت تشغيل المحرك وزئير V8 الكامل المتطابق مع الكود الأصلي
       playEngineStart() {
-        this.init();
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        for (let i = 0; i < 4; i++) {
-          const t = now + i * 0.12;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(45 + i * 6, t);
-          gain.gain.setValueAtTime(0.18, t);
-          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start(t);
-          osc.stop(t + 0.09);
+        if (this.isMuted) return;
+        const ctx = this.getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        const masterGain = ctx.createGain();
+        masterGain.gain.setValueAtTime(0.7, now);
+        masterGain.connect(ctx.destination);
+
+        // 1. صوت السلف (Starter motor crank)
+        for (let i = 0; i < 3; i++) {
+          const crankOsc = ctx.createOscillator();
+          const crankGain = ctx.createGain();
+          crankOsc.type = 'sawtooth';
+          crankOsc.frequency.setValueAtTime(85 + i * 15, now + i * 0.12);
+          crankGain.gain.setValueAtTime(0.2, now + i * 0.12);
+          crankGain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.08);
+
+          crankOsc.connect(crankGain);
+          crankGain.connect(masterGain);
+          crankOsc.start(now + i * 0.12);
+          crankOsc.stop(now + i * 0.12 + 0.09);
         }
-        const roarStart = now + 0.48;
-        const sub = this.ctx.createOscillator();
-        const mid = this.ctx.createOscillator();
-        const roarGain = this.ctx.createGain();
-        sub.type = 'sawtooth';
-        sub.frequency.setValueAtTime(65, roarStart);
-        sub.frequency.exponentialRampToValueAtTime(140, roarStart + 0.22);
-        sub.frequency.exponentialRampToValueAtTime(55, roarStart + 0.85);
 
-        mid.type = 'triangle';
-        mid.frequency.setValueAtTime(130, roarStart);
-        mid.frequency.exponentialRampToValueAtTime(280, roarStart + 0.22);
-        mid.frequency.exponentialRampToValueAtTime(110, roarStart + 0.85);
+        // 2. زئير المحرك الصاخب مع اهتزازات العادم (Sub Rumble)
+        const roarStart = now + 0.35;
+        const subOsc = ctx.createOscillator();
+        const subGain = ctx.createGain();
+        subOsc.type = 'triangle';
+        subOsc.frequency.setValueAtTime(45, roarStart);
+        subOsc.frequency.exponentialRampToValueAtTime(140, roarStart + 0.6);
+        subOsc.frequency.exponentialRampToValueAtTime(70, roarStart + 1.8);
+        subOsc.frequency.linearRampToValueAtTime(50, roarStart + 2.6);
 
-        roarGain.gain.setValueAtTime(0.01, roarStart);
-        roarGain.gain.linearRampToValueAtTime(0.35, roarStart + 0.15);
-        roarGain.gain.exponentialRampToValueAtTime(0.001, roarStart + 0.9);
+        subGain.gain.setValueAtTime(0.01, roarStart);
+        subGain.gain.linearRampToValueAtTime(0.65, roarStart + 0.2);
+        subGain.gain.exponentialRampToValueAtTime(0.4, roarStart + 1.2);
+        subGain.gain.exponentialRampToValueAtTime(0.001, roarStart + 2.8);
 
-        sub.connect(roarGain);
-        mid.connect(roarGain);
-        roarGain.connect(this.ctx.destination);
-        sub.start(roarStart);
-        mid.start(roarStart);
-        sub.stop(roarStart + 0.95);
-        mid.stop(roarStart + 0.95);
+        subOsc.connect(subGain);
+        subGain.connect(masterGain);
+        subOsc.start(roarStart);
+        subOsc.stop(roarStart + 2.85);
+
+        // تدرج أسطوانات التوربو المزدوجة (Twin-Turbo In-line Cylinders Harmonic Grit)
+        const cylOsc1 = ctx.createOscillator();
+        const cylOsc2 = ctx.createOscillator();
+        const cylFilter = ctx.createBiquadFilter();
+        const cylGain = ctx.createGain();
+
+        cylOsc1.type = 'sawtooth';
+        cylOsc2.type = 'sawtooth';
+
+        cylOsc1.frequency.setValueAtTime(80, roarStart);
+        cylOsc1.frequency.exponentialRampToValueAtTime(320, roarStart + 0.55);
+        cylOsc1.frequency.exponentialRampToValueAtTime(120, roarStart + 1.6);
+        cylOsc1.frequency.linearRampToValueAtTime(75, roarStart + 2.7);
+
+        cylOsc2.frequency.setValueAtTime(82, roarStart);
+        cylOsc2.frequency.exponentialRampToValueAtTime(328, roarStart + 0.55);
+        cylOsc2.frequency.exponentialRampToValueAtTime(124, roarStart + 1.6);
+        cylOsc2.frequency.linearRampToValueAtTime(78, roarStart + 2.7);
+
+        cylFilter.type = 'lowpass';
+        cylFilter.frequency.setValueAtTime(250, roarStart);
+        cylFilter.frequency.exponentialRampToValueAtTime(1800, roarStart + 0.55);
+        cylFilter.frequency.exponentialRampToValueAtTime(400, roarStart + 1.7);
+        cylFilter.Q.setValueAtTime(4.5, roarStart);
+
+        cylGain.gain.setValueAtTime(0.01, roarStart);
+        cylGain.gain.linearRampToValueAtTime(0.55, roarStart + 0.25);
+        cylGain.gain.exponentialRampToValueAtTime(0.25, roarStart + 1.4);
+        cylGain.gain.exponentialRampToValueAtTime(0.001, roarStart + 2.7);
+
+        cylOsc1.connect(cylFilter);
+        cylOsc2.connect(cylFilter);
+        cylFilter.connect(cylGain);
+        cylGain.connect(masterGain);
+
+        cylOsc1.start(roarStart);
+        cylOsc2.start(roarStart);
+        cylOsc1.stop(roarStart + 2.75);
+        cylOsc2.stop(roarStart + 2.75);
+
+        // تفريغ عادم التوربو الحقيقي (Exhaust Pop & Turbo Spool)
+        this.createExhaustNoise(ctx, masterGain, roarStart + 0.2, 2.2);
+
+        // صوت شرارة تفريغ الزينون
+        this.playXenonIgniteSound(ctx, now);
       }
-      playThrottleRev() {
-        this.init();
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(70, now);
-        osc.frequency.exponentialRampToValueAtTime(220, now + 0.12);
-        osc.frequency.exponentialRampToValueAtTime(80, now + 0.4);
-        gain.gain.setValueAtTime(0.01, now);
-        gain.gain.linearRampToValueAtTime(0.25, now + 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.45);
-      }
-      playClick() {
-        this.init();
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
+
+      playXenonIgniteSound(providedCtx, atTime) {
+        if (this.isMuted) return;
+        const ctx = providedCtx || this.getAudioContext();
+        if (!ctx) return;
+        const now = atTime !== undefined ? atTime : ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(950, now);
-        osc.frequency.exponentialRampToValueAtTime(450, now + 0.04);
-        gain.gain.setValueAtTime(0.12, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(2400, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(400, now + 0.25);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1200, now);
+        filter.Q.setValueAtTime(3, now);
+
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
         osc.start(now);
-        osc.stop(now + 0.05);
+        osc.stop(now + 0.3);
+      }
+
+      // صوت دعسة البنزين الحقيقية (Throttle Rev Blip)
+      playThrottleRev() {
+        if (this.isMuted) return;
+        const ctx = this.getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc2.type = 'triangle';
+
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.exponentialRampToValueAtTime(280, now + 0.22);
+        osc.frequency.exponentialRampToValueAtTime(95, now + 0.7);
+
+        osc2.frequency.setValueAtTime(55, now);
+        osc2.frequency.exponentialRampToValueAtTime(140, now + 0.22);
+        osc2.frequency.exponentialRampToValueAtTime(45, now + 0.7);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(400, now);
+        filter.frequency.exponentialRampToValueAtTime(1400, now + 0.22);
+        filter.frequency.exponentialRampToValueAtTime(300, now + 0.7);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.45, now + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
+
+        osc.connect(filter);
+        osc2.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc2.start(now);
+        osc.stop(now + 0.78);
+        osc2.stop(now + 0.78);
+
+        this.createExhaustNoise(ctx, ctx.destination, now + 0.22, 0.4);
+      }
+
+      // صوت النقر الملكي بين التبويبات (Tactile Tab Click)
+      playTabClick() {
+        if (this.isMuted) return;
+        const ctx = this.getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(650, now);
+        osc.frequency.exponentialRampToValueAtTime(240, now + 0.04);
+
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.06);
+      }
+
+      // محاكي صوت هواء وتفريغ العادم
+      createExhaustNoise(ctx, destination, startTime, duration) {
+        try {
+          const bufferSize = Math.floor(ctx.sampleRate * duration);
+          const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const output = noiseBuffer.getChannelData(0);
+
+          let b0 = 0, b1 = 0, b2 = 0;
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99 * b0 + white * 0.05;
+            b1 = 0.95 * b1 + white * 0.1;
+            b2 = 0.85 * b2 + white * 0.2;
+            output[i] = (b0 + b1 + b2) * 0.35;
+          }
+
+          const whiteNoise = ctx.createBufferSource();
+          whiteNoise.buffer = noiseBuffer;
+
+          const noiseFilter = ctx.createBiquadFilter();
+          noiseFilter.type = 'bandpass';
+          noiseFilter.frequency.setValueAtTime(500, startTime);
+          noiseFilter.frequency.exponentialRampToValueAtTime(2200, startTime + duration * 0.3);
+          noiseFilter.frequency.exponentialRampToValueAtTime(300, startTime + duration);
+          noiseFilter.Q.setValueAtTime(1.8, startTime);
+
+          const noiseGain = ctx.createGain();
+          noiseGain.gain.setValueAtTime(0.01, startTime);
+          noiseGain.gain.linearRampToValueAtTime(0.22, startTime + 0.15);
+          noiseGain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+          whiteNoise.connect(noiseFilter);
+          noiseFilter.connect(noiseGain);
+          noiseGain.connect(destination);
+
+          whiteNoise.start(startTime);
+          whiteNoise.stop(startTime + duration + 0.05);
+        } catch (e) {}
       }
     }
-    const soundFx = new SoundFx();
+
+    const soundFx = new SoundSystem();
 
     // حالة المشغل
     let currentTrackIndex = 0;
@@ -434,7 +607,7 @@
     }
 
     function togglePlay() {
-      soundFx.init();
+      soundFx.getAudioContext();
       if (isPlaying) {
         audio.pause();
         setPlayState(false);
@@ -548,7 +721,7 @@
 
     // التنقل السلس بين التبويبات بدون أي اهتزاز
     function switchTab(tab) {
-      soundFx.playClick();
+      soundFx.playTabClick();
       if (tab === activeTab) return;
       activeTab = tab;
 
@@ -583,33 +756,43 @@
       }
     }
 
-    // تفاعل النقر على شاشة البداية لتشغيل الفلاش وصوت المحرك
+    // تفاعل النقر على شاشة البداية لتشغيل فلاش المصابيح وصوت المحرك الحقيقي المتطابق
     let hasIgnited = false;
     document.getElementById('splashView').addEventListener('click', () => {
       if (hasIgnited) return;
       hasIgnited = true;
 
+      // تشغيل زئير المحرك V8
       soundFx.playEngineStart();
 
+      // تشغيل فلاش الزينون وحلقات المصابيح (Headlight Flash Effect)
       const flash = document.getElementById('flashOverlay');
-      flash.classList.remove('opacity-0');
-      flash.classList.add('opacity-80');
+      flash.classList.remove('hidden');
       setTimeout(() => {
-        flash.classList.remove('opacity-80');
-        flash.classList.add('opacity-0');
-      }, 250);
+        flash.classList.remove('opacity-0');
+        flash.classList.add('opacity-100');
+      }, 20);
 
+      setTimeout(() => {
+        flash.classList.remove('opacity-100');
+        flash.classList.add('opacity-0');
+        setTimeout(() => {
+          flash.classList.add('hidden');
+        }, 750);
+      }, 350);
+
+      // الانتقال السلس إلى الشاشة الرئيسية
       setTimeout(() => {
         const splash = document.getElementById('splashView');
         const main = document.getElementById('mainView');
         splash.classList.add('opacity-0', 'pointer-events-none');
         main.classList.remove('opacity-0', 'pointer-events-none');
         main.classList.add('opacity-100');
-      }, 650);
+      }, 700);
     });
 
     function restartIntro() {
-      soundFx.playClick();
+      soundFx.playTabClick();
       hasIgnited = false;
       const splash = document.getElementById('splashView');
       const main = document.getElementById('mainView');
@@ -624,7 +807,7 @@
       card.classList.add('ring-4', 'ring-white', 'brightness-125');
       setTimeout(() => {
         card.classList.remove('ring-4', 'ring-white', 'brightness-125');
-      }, 350);
+      }, 400);
     }
 
     // تحميل أول أغنية
